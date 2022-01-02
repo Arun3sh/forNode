@@ -98,9 +98,9 @@ app.post('/movies', express.json(), async (request, response) => {
 // Delete method
 app.delete('/movies/delete/:id', async (request, response) => {
 	const { id } = request.params;
-	const deleteMovie = await client.db('mern').collection('movies').deleteOne({ id: id });
+	await client.db('mern').collection('movies').deleteOne({ id: id });
 	//deleteMovie.deletedCount ? response.send(client.db('mern').collection('movies').find({})) : '';
-	response.send(deleteMovie);
+	response.send('deleted Successfully');
 });
 
 // Update rating with movie id

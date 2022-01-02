@@ -25,7 +25,7 @@ async function createConnection() {
 const client = await createConnection();
 
 app.get('/', (request, response) => {
-	response.send('Hello 🌏');
+	response.send('Hello 🌏 heroku');
 });
 
 // Movie with query string

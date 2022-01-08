@@ -5,6 +5,7 @@
 import express, { request, response } from 'express';
 import { MongoClient } from 'mongodb';
 import dotenv from 'dotenv';
+import { moviesRouter } from './routes/movies.js';
 
 dotenv.config();
 const app = express();
@@ -22,11 +23,13 @@ async function createConnection() {
 	return client;
 }
 
-const client = await createConnection();
+export const client = await createConnection();
 
 app.get('/', (request, response) => {
 	response.send('Hello 🌏 heroku');
 });
+
+app.use('/movies', moviesRouter);
 
 // Movie with query string
 
@@ -75,53 +78,4 @@ app.get('/', (request, response) => {
 // 	res ? response.send(res) : response.send('Movie not Found');
 // });
 
-// Movie with query - mongo connected
-app.get('/movies', async (request, response) => {
-	const filter = request.query;
-	if (filter.rating) {
-		filter.rating = +filter.rating;
-	}
-
-	const movies = await client.db('mern').collection('movies').find(filter).toArray();
-	response.send(movies);
-});
-// app.use(express.json()) -- middleware
-// Post method to add movie
-app.post('/movies', express.json(), async (request, response) => {
-	const data = request.body;
-	console.log('incoming', data);
-	const result = await client.db('mern').collection('movies').insertMany(data);
-
-	response.send(result);
-});
-
-// Delete method
-app.delete('/movies/delete/:id', async (request, response) => {
-	const { id } = request.params;
-	await client.db('mern').collection('movies').deleteOne({ id: id });
-	//deleteMovie.deletedCount ? response.send(client.db('mern').collection('movies').find({})) : '';
-	response.send('deleted Successfully');
-});
-
-// Update rating with movie id
-app.put('/movies/update/:id', async (request, response) => {
-	const { id } = request.params;
-	const { language, rating } = request.query;
-	console.log(rating);
-	const update = await client
-		.db('mern')
-		.collection('movies')
-		.updateOne({ id: id }, { $set: { rating: +rating } });
-
-	response.send(update);
-});
-
-// Movie with id - Mongo connected
-app.get('/movies/:id', async (request, response) => {
-	const { id } = request.params;
-
-	const movie = await client.db('mern').collection('movies').findOne({ id: id });
-	console.log(movie);
-	movie ? response.send(movie) : response.send({ msg: 'Movie not found' });
-});
 app.listen(PORT, () => console.log('The server started', PORT));

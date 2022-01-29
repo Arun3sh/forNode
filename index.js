@@ -2,6 +2,7 @@
 // const { response } = require('express');
 // const express = require('express');
 // const { request } = require('http');
+import cors from 'cors';
 import express, { request, response } from 'express';
 import { MongoClient } from 'mongodb';
 import dotenv from 'dotenv';
@@ -10,7 +11,7 @@ import { usersRouter } from './routes/users.js';
 
 dotenv.config();
 const app = express();
-
+app.use(cors());
 // const PORT = 9000;
 const PORT = process.env.PORT;
 

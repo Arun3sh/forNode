@@ -23,7 +23,7 @@ router.get('/', async (request, response) => {
 // app.use(express.json()) -- middleware
 
 // Post method to add movie
-router.post('/', express.json(), async (request, response) => {
+router.post('/', cors, async (request, response) => {
 	const data = request.body;
 	// console.log('incoming', data);
 	const result = await addMovies(data);

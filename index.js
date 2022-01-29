@@ -6,6 +6,7 @@ import express, { request, response } from 'express';
 import { MongoClient } from 'mongodb';
 import dotenv from 'dotenv';
 import { moviesRouter } from './routes/movies.js';
+import { usersRouter } from './routes/users.js';
 
 dotenv.config();
 const app = express();
@@ -30,6 +31,7 @@ app.get('/', (request, response) => {
 });
 
 app.use('/movies', moviesRouter);
+app.use('/users', usersRouter);
 
 // Movie with query string
 

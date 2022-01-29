@@ -6,6 +6,7 @@ import {
 	addMovies,
 	findMovies,
 } from '../helper.js';
+import cors from 'cors';
 
 const router = express.Router();
 

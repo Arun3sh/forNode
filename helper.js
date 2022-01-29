@@ -26,7 +26,7 @@ async function addUsers(data) {
 }
 
 async function findUsername(filter) {
-	return await client.db('mern').collection('users').find(filter).toArray();
+	return await client.db('mern').collection('users').findOne(filter);
 }
 
 async function genPassword(password) {

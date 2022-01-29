@@ -1,4 +1,5 @@
 import { client } from './index.js';
+import bcrypt from 'bcrypt';
 
 async function searchMovieById(id) {
 	return await client.db('mern').collection('movies').findOne({ id: id });
@@ -20,4 +21,30 @@ async function findMovies(filter) {
 	return await client.db('mern').collection('movies').find(filter).toArray();
 }
 
-export { searchMovieById, updateMovieRatingById, deleteMovieById, addMovies, findMovies };
+async function addUsers(data) {
+	return await client.db('mern').collection('users').insertOne(data);
+}
+
+async function findUsername(filter) {
+	return await client.db('mern').collection('users').find(filter).toArray();
+}
+
+async function genPassword(password) {
+	const salt = await bcrypt.genSalt(10);
+	console.log('salt', salt);
+
+	const hashedPassword = await bcrypt.hash(password, salt);
+	console.log(hashedPassword);
+	return hashedPassword;
+}
+
+export {
+	searchMovieById,
+	updateMovieRatingById,
+	deleteMovieById,
+	addMovies,
+	findMovies,
+	addUsers,
+	findUsername,
+	genPassword,
+};

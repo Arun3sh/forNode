@@ -1,19 +1,26 @@
 import { client } from './index.js';
 import bcrypt from 'bcrypt';
+import { ObjectId } from 'mongodb';
 
-async function searchMovieById(_id) {
-	return await client.db('mern').collection('movies').findOne({ _id: _id });
-}
-
-async function updateMovieRatingById(_id, updatedMovie) {
+async function searchMovieById(id) {
 	return await client
 		.db('mern')
 		.collection('movies')
-		.updateOne({ _id: _id }, { $set: updatedMovie });
+		.findOne({ _id: ObjectId(id) });
+}
+
+async function updateMovieRatingById(id, updatedMovie) {
+	return await client
+		.db('mern')
+		.collection('movies')
+		.updateOne({ _id: ObjectId(id) }, { $set: updatedMovie });
 }
 
 async function deleteMovieById(_id) {
-	await client.db('mern').collection('movies').deleteOne({ _id: _id });
+	await client
+		.db('mern')
+		.collection('movies')
+		.deleteOne({ _id: ObjectId(id) });
 }
 
 async function addMovies(data) {

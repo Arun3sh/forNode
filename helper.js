@@ -2,15 +2,18 @@ import { client } from './index.js';
 import bcrypt from 'bcrypt';
 
 async function searchMovieById(id) {
-	return await client.db('mern').collection('movies').findOne({ id: id });
+	return await client.db('mern').collection('movies').findOne({ _id: id });
 }
 
 async function updateMovieRatingById(id, updatedMovie) {
-	return await client.db('mern').collection('movies').updateOne({ id: id }, { $set: updatedMovie });
+	return await client
+		.db('mern')
+		.collection('movies')
+		.updateOne({ _id: id }, { $set: updatedMovie });
 }
 
 async function deleteMovieById(id) {
-	await client.db('mern').collection('movies').deleteOne({ id: id });
+	await client.db('mern').collection('movies').deleteOne({ _id: id });
 }
 
 async function addMovies(data) {

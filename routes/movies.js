@@ -34,8 +34,8 @@ router.post('/', cors, async (request, response) => {
 
 // Delete method
 router.delete('/:id', async (request, response) => {
-	const { id } = request.params;
-	const movie = await deleteMovieById(id);
+	const { _id } = request.params;
+	const movie = await deleteMovieById(_id);
 
 	response.send(movie);
 	// console.log(movie);
@@ -44,19 +44,19 @@ router.delete('/:id', async (request, response) => {
 
 // Update rating with movie id
 router.put('/:id', express.json(), async (request, response) => {
-	const { id } = request.params;
+	const { _id } = request.params;
 	const updatedMovie = request.body;
 
-	const update = await updateMovieRatingById(id, updatedMovie);
+	const update = await updateMovieRatingById(_id, updatedMovie);
 
 	response.send(update);
 });
 
 // Movie with id - Mongo connected
 router.get('/:id', async (request, response) => {
-	const { id } = request.params;
+	const { _id } = request.params;
 
-	const movie = await searchMovieById(id);
+	const movie = await searchMovieById(_id);
 	console.log(movie);
 	movie ? response.send(movie) : response.send({ msg: 'Movie not found' });
 });

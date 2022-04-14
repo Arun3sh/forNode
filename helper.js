@@ -20,7 +20,7 @@ async function deleteMovieById(_id) {
 	await client
 		.db('mern')
 		.collection('movies')
-		.deleteOne({ _id: ObjectId(id) });
+		.deleteOne({ _id: ObjectId(_id) });
 }
 
 async function addMovies(data) {

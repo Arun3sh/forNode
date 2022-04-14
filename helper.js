@@ -24,7 +24,7 @@ async function deleteMovieById(_id) {
 }
 
 async function addMovies(data) {
-	return await client.db('mern').collection('movies').insertMany(data);
+	return await client.db('mern').collection('movies').insertOne(data);
 }
 
 async function findMovies(filter) {

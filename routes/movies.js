@@ -6,7 +6,6 @@ import {
 	addMovies,
 	findMovies,
 } from '../helper.js';
-import cors from 'cors';
 
 const router = express.Router();
 
@@ -24,9 +23,9 @@ router.get('/', async (request, response) => {
 // app.use(express.json()) -- middleware
 
 // Post method to add movie
-router.post('/', cors, async (request, response) => {
+router.post('/', async (request, response) => {
 	const data = request.body;
-	// console.log('incoming', data);
+
 	const result = await addMovies(data);
 
 	response.send(result);
@@ -35,11 +34,10 @@ router.post('/', cors, async (request, response) => {
 // Delete method
 router.delete('/:id', async (request, response) => {
 	const { id } = request.params;
+
 	const movie = await deleteMovieById(id);
 
 	response.send(movie);
-	// console.log(movie);
-	// movie ? response.send(movie) : response.send({ msg: 'Deleted Successfully' });
 });
 
 // Update rating with movie id
@@ -55,9 +53,9 @@ router.put('/:id', express.json(), async (request, response) => {
 // Movie with id - Mongo connected
 router.get('/:id', async (request, response) => {
 	const { id } = request.params;
-	console.log(id);
+
 	const movie = await searchMovieById(id);
-	console.log(movie);
+
 	movie ? response.send(movie) : response.send({ msg: 'Movie not found' });
 });
 
